@@ -9,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -37,6 +39,16 @@ public class UserService {
         userRepo.save(user);
     }
 
-
+    public List<UserDto> findAllUsers() {
+        return userRepo.findAll().stream()
+                .map(user ->
+                        UserDto.builder()
+                                .username(user.getUsername())
+                                .email(user.getEmail())
+                                .isExpired(user.getIsExpired())
+                                .registeredOn(user.getRegistrationDate())
+                                .build())
+                .collect(Collectors.toList());
+    }
 
 }

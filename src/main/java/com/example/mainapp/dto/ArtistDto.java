@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ArtistDto extends UserDto {
+public class ArtistDto {
 
     private String firstName;
     private String lastName;

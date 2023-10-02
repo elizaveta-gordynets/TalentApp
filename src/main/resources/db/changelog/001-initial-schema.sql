@@ -74,3 +74,7 @@ CREATE TABLE users_roles (
 );
 ALTER TABLE users_roles ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users (id);
 ALTER TABLE users_roles ADD CONSTRAINT role_id_fk FOREIGN KEY (roles_id) REFERENCES roles (id);
+
+--changeset Liz:3
+ALTER TABLE users ADD COLUMN is_expired boolean;
+ALTER TABLE users ADD COLUMN registration_date timestamp;

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -23,4 +24,8 @@ public class User {
     private String email;
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+    @Column(name = "is_expired")
+    private Boolean isExpired;
+    @Column(name = "registration_date")
+    private LocalDateTime registrationDate;
 }

@@ -1,15 +1,16 @@
 package com.example.mainapp.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class UserDto {
 
     private String username;
-    private String password;
     private String email;
+    private Boolean isExpired;
+    private LocalDateTime registeredOn;
+    private String password;
 }
