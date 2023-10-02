@@ -1,8 +1,7 @@
 package com.example.mainapp.security;
 
 import com.example.mainapp.dto.UserDetailsImpl;
-import com.example.mainapp.entity.User;
-import com.example.mainapp.repository.UserRepo;
+import com.example.mainapp.service.UserDetailsServiceImpl;
 import com.example.mainapp.util.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,21 +16,17 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-
-import static java.util.Objects.nonNull;
 
 @Slf4j
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtils utils;
-    private final UserRepo repo;
+    private final UserDetailsServiceImpl service;
 
-    public JwtFilter(JwtUtils utils, UserRepo repo) {
+    public JwtFilter(JwtUtils utils, UserDetailsServiceImpl service) {
         this.utils = utils;
-        this.repo = repo;
+        this.service = service;
     }
 
     @Override
@@ -39,11 +34,10 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-
             if (jwt != null && utils.validateToken(jwt)) {
                 String username = utils.getUsernameFromToken(jwt);
-                Optional<User> user = repo.findByUsername(username);
-                UserDetailsImpl userDetails = new UserDetailsImpl(user.get());
+
+                UserDetailsImpl userDetails = service.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

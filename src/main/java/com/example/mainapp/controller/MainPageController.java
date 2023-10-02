@@ -25,16 +25,7 @@ public class MainPageController {
 
     @GetMapping(value = "/vacancies")
     public String getAllVacancies(ModelMap model) {
-        List<VacancyDto> vacancyDtos = new ArrayList<>();
-        vacancyDtos.add(VacancyDto.builder()
-                        .description("Some description")
-                        .header("Header for first one")
-                .build());
-        vacancyDtos.add(VacancyDto.builder()
-                        .header("Secod header")
-                        .description("Second Description")
-                .build());
-        model.addAttribute("vacancies", vacancyDtos);
+
         return "mainPage";
     }
 }

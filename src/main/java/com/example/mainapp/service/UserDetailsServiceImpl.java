@@ -14,11 +14,9 @@ import java.util.Optional;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepo userRepo;
-    private final BCryptPasswordEncoder encoder;
 
-    public UserDetailsServiceImpl(UserRepo userRepo, BCryptPasswordEncoder encoder) {
+    public UserDetailsServiceImpl(UserRepo userRepo) {
         this.userRepo = userRepo;
-        this.encoder = encoder;
     }
 
     @Override
